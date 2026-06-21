@@ -16,7 +16,7 @@
     {
       "customType": "regex",
       "description": "Pinned s6-overlay version in docker/scripts/install-s6 (4-part version, github tag vX.Y.Z.W).",
-      "fileMatch": ["^docker/scripts/install-s6$"],
+      "managerFilePatterns": ["/^docker/scripts/install-s6$/"],
       "matchStrings": ["S6_OVERLAY_VERSION=(?<currentValue>\\S+)"],
       "depNameTemplate": "just-containers/s6-overlay",
       "datasourceTemplate": "github-releases",
