@@ -5,7 +5,7 @@
 
 # Base image is digest-pinned for reproducibility; Renovate opens a PR when
 # nginxproxymanager/nginx-full:certbot-node is republished (i.e. when nginx updates).
-ARG BASE_IMAGE=nginxproxymanager/nginx-full:certbot-node@sha256:055268ad1f2c979819777ddecc963c8be0e950abb421d1bd3ef7a9d1a4af940d
+ARG BASE_IMAGE=nginxproxymanager/nginx-full:certbot-node@sha256:711431dba377b9f1e6276103d34b937acdaa9da3a2828488c4ef72909eed22d6
 FROM nginxproxymanager/testca AS testca
 FROM $BASE_IMAGE
 
