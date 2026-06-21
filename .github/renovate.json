@@ -46,6 +46,12 @@
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "npm dev (non-major)"
+    },
+    {
+      "description": "Keep @biomejs/biome in its own PR (must come AFTER the dev-deps group rule to override it). Biome bumps can introduce new/stricter lint rules that need code fixes, so they must not block the rest of the dev-deps group.",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["@biomejs/biome"],
+      "groupName": "biome"
     }
   ]
 }
