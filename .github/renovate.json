@@ -3,6 +3,7 @@
   "extends": ["config:recommended", ":semanticCommits", ":dependencyDashboard"],
   "timezone": "Etc/UTC",
   "labels": ["dependencies"],
+  "ignoreDeps": ["batchflow"],
   "rangeStrategy": "bump",
   "automerge": true,
   "automergeStrategy": "squash",
