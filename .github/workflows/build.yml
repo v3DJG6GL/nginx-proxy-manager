@@ -24,7 +24,7 @@ permissions:
   packages: write
 
 jobs:
-  ci:                  # job name MUST stay "ci" — the develop ruleset requires a status check named "ci"
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -75,3 +75,20 @@ jobs:
             BUILD_DATE=${{ steps.vars.outputs.date }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  # Stable umbrella check for the branch ruleset. Individual job names (build,
+  # and any future lint/test jobs) can change as the pipeline grows; "all-ci"
+  # is the single status check to require (source: GitHub Actions), so the
+  # ruleset never needs re-pointing. always() + explicit check means it always
+  # reports a definitive success/failure instead of being skipped.
+  all-ci:
+    needs: [build]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify required jobs succeeded
+        run: |
+          if [ "${{ needs.build.result }}" != "success" ]; then
+            echo "::error::build=${{ needs.build.result }}"
+            exit 1
+          fi
