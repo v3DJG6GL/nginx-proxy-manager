@@ -29,6 +29,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Route Docker Hub pulls through Google's pull-through mirror to dodge
+      # docker.io rate-limits/timeouts. Covers the host daemon (frontend-build's
+      # pull + qemu binfmt) and buildkit base-image pulls (buildkitd config below).
+      - name: Route Docker Hub pulls via mirror.gcr.io
+        run: |
+          sudo mkdir -p /etc/docker
+          echo '{"registry-mirrors":["https://mirror.gcr.io"]}' | sudo tee /etc/docker/daemon.json >/dev/null
+          sudo systemctl restart docker
+          printf '[registry."docker.io"]\n  mirrors = ["mirror.gcr.io"]\n' > /tmp/buildkitd-mirror.toml
+
+      - name: Pre-pull base image (with retry)
+        run: |
+          for i in 1 2 3; do
+            docker pull nginxproxymanager/nginx-full:certbot-node && exit 0
+            echo "pull failed — retry $i"; sleep 15
+          done
+          exit 1
+
       - name: Build frontend (lint + tests + dist)
         run: ./scripts/ci/frontend-build
 
@@ -39,6 +57,8 @@ jobs:
 
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
+        with:
+          buildkitd-config: /tmp/buildkitd-mirror.toml
 
       - name: Login to GHCR
         if: github.event_name != 'pull_request'

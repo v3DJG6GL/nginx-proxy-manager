@@ -3,7 +3,9 @@
 
 # This file assumes that the frontend has been built using ./scripts/frontend-build
 
-ARG BASE_IMAGE=nginxproxymanager/nginx-full:certbot-node
+# Base image is digest-pinned for reproducibility; Renovate opens a PR when
+# nginxproxymanager/nginx-full:certbot-node is republished (i.e. when nginx updates).
+ARG BASE_IMAGE=nginxproxymanager/nginx-full:certbot-node@sha256:055268ad1f2c979819777ddecc963c8be0e950abb421d1bd3ef7a9d1a4af940d
 FROM nginxproxymanager/testca AS testca
 FROM $BASE_IMAGE
 
