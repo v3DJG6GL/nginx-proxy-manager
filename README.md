@@ -1,3 +1,7 @@
+> [!NOTE]
+> # FORKED REPOSITORY
+> ### Fork of [NginxProxyManager/nginx-proxy-manager](https://github.com/NginxProxyManager/nginx-proxy-manager) to keep dependencies updated :)
+
 <p align="center">
 	<img src="https://nginxproxymanager.com/github.png">
 	<br><br>
