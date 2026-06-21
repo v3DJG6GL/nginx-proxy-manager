@@ -24,7 +24,7 @@ permissions:
   packages: write
 
 jobs:
-  build:
+  ci:                  # job name MUST stay "ci" — the develop ruleset requires a status check named "ci"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
