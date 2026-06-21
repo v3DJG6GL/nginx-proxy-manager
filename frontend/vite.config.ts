@@ -5,6 +5,14 @@ import "vitest/config";
 import { execFile } from "node:child_process";
 
 const runLocaleScripts = () => {
+	// Skip during `vitest run`: Vitest starts an internal Vite dev server, so
+	// configureServer fires and this async recompile truncates+rewrites
+	// src/locale/lang/*.json while the tests are importing them — an
+	// intermittent "EOF while parsing" suite failure. The CI step compiles the
+	// locales before running the tests, so they're already up to date here.
+	if (process.env.VITEST) {
+		return;
+	}
 	execFile("yarn", ["locale-compile"], (error, stdout, _stderr) => {
 		if (error) {
 			throw error;
