@@ -53,7 +53,7 @@ jobs:
       - name: Pre-pull base image (with retry)
         run: |
           for i in 1 2 3; do
-            docker pull nginxproxymanager/nginx-full:certbot-node && exit 0
+            docker pull ghcr.io/v3djg6gl/nginx-full:certbot-node && exit 0
             echo "pull failed — retry $i"; sleep 15
           done
           exit 1

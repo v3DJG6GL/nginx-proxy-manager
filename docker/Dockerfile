@@ -3,9 +3,11 @@
 
 # This file assumes that the frontend has been built using ./scripts/frontend-build
 
-# Base image is digest-pinned for reproducibility; Renovate opens a PR when
-# nginxproxymanager/nginx-full:certbot-node is republished (i.e. when nginx updates).
-ARG BASE_IMAGE=nginxproxymanager/nginx-full:certbot-node@sha256:711431dba377b9f1e6276103d34b937acdaa9da3a2828488c4ef72909eed22d6
+# Base image is OUR self-built OpenResty base (v3DJG6GL/docker-nginx-full), published
+# to GHCR and digest-pinned for reproducibility. It ships nginx 1.31.1 (OpenResty
+# 1.31.1.1) instead of the upstream base's 1.29.2. Renovate bumps this digest whenever
+# the fork republishes (i.e. when it adopts a newer OpenResty release).
+ARG BASE_IMAGE=ghcr.io/v3djg6gl/nginx-full:certbot-node@sha256:6462283ebcb740f032e79e14a48d86f8389ee74a3f9e9ef733908ccd0ae2084f
 FROM nginxproxymanager/testca AS testca
 FROM $BASE_IMAGE
 
