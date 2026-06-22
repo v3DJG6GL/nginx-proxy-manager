@@ -1,5 +1,16 @@
 name: Build & Publish
 
+# Per-run title so PR/CI runs are distinguishable from real publishes at a glance
+# (the workflow name is always "Build & Publish"; this differentiates the runs).
+run-name: >-
+  ${{ github.event_name == 'pull_request'
+      && format('CI · PR #{0} · {1}', github.event.pull_request.number, github.event.pull_request.title)
+      || github.event_name == 'schedule'
+      && 'Publish · weekly refresh'
+      || github.event_name == 'workflow_dispatch'
+      && format('Publish · manual · {0}', github.ref_name)
+      || format('Publish · {0}', github.ref_name) }}
+
 on:
   push:
     branches: [develop]
