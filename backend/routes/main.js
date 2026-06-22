@@ -32,7 +32,8 @@ router.use(logRequest);
  * GET /api
  */
 router.get("/", async (_, res /*, next*/) => {
-	const version = pjson.version.split("-").shift().split(".");
+	// Prefer the build-time version (.version, injected as NPM_BUILD_VERSION); fall back to package.json in dev.
+	const version = (process.env.NPM_BUILD_VERSION || pjson.version).split("-").shift().split(".");
 	const setup = await isSetup();
 
 	res.status(200).send({

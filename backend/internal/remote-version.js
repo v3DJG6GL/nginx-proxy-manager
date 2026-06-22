@@ -29,7 +29,8 @@ const internalRemoteVersion = {
 		}
 
 		const latestVersion = internalRemoteVersion.last_result.tag_name;
-		const version = pjson.version.split("-").shift().split(".");
+		// Prefer the build-time version (.version, injected as NPM_BUILD_VERSION); fall back to package.json in dev.
+		const version = (process.env.NPM_BUILD_VERSION || pjson.version).split("-").shift().split(".");
 		const currentVersion = `v${version[0]}.${version[1]}.${version[2]}`;
 		return {
 			current: currentVersion,
