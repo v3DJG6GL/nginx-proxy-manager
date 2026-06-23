@@ -5,6 +5,7 @@
   "labels": ["dependencies"],
   "suppressNotifications": ["dependencyLookupWarnings"],
   "rangeStrategy": "bump",
+  "postUpdateOptions": ["yarnDedupeHighest"],
   "automerge": true,
   "automergeStrategy": "squash",
   "platformAutomerge": true,
