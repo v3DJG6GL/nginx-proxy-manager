@@ -7,7 +7,7 @@
 # to GHCR and digest-pinned for reproducibility. It ships nginx 1.31.1 (OpenResty
 # 1.31.1.1) instead of the upstream base's 1.29.2. Renovate bumps this digest whenever
 # the fork republishes (i.e. when it adopts a newer OpenResty release).
-ARG BASE_IMAGE=ghcr.io/v3djg6gl/nginx-full:certbot-node@sha256:09740f69eb4856ccc50db5625b8f8bd8a2d3674667c4f5bf180795b56b3b5b7f
+ARG BASE_IMAGE=ghcr.io/v3djg6gl/nginx-full:certbot-node@sha256:62c34546e37be5d57777caf8ab653a98e5f032fb783a032b43a3826878f19fdc
 FROM nginxproxymanager/testca AS testca
 FROM $BASE_IMAGE
 
